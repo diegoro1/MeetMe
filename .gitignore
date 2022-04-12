@@ -1,1 +1,3 @@
-API/env
+API/.env
+.env
+API/node_modules
