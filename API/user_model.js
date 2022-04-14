@@ -36,7 +36,23 @@ const createUser = (body) => {
   })
 }
 
+const userExist = (body) => {
+  return new Promise(function(resolve, reject) {
+    const {email, password} = body;
+    let query = 'SELECT * FROM users WHERE email=$1 AND hash=$2'
+    pool.query(query, [email, password], (error, results) => {
+      if (error) {
+        console.log("Error with user_model");
+        console.log(error)
+        reject(error);
+      }
+      resolve(results.rows[0]);
+    })
+  }
+}
+
 module.exports = {
   getUsers,
-  createUser
+  createUser,
+  userExist
 }
