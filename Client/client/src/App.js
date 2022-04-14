@@ -1,24 +1,23 @@
-import logo from './logo.svg';
+import {useState, useEffect} from 'react';
 import './App.css';
 
 function App() {
+  const [location, setLocation] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/')
+    .then(res => {
+      return res.text();
+    })
+    .then(data => {
+      setLocation(data);
+    });
+    console.log(location);
+  });
+
   return (
     <div className="App">
-      { fetch('http://127.0.0.1:8000/').then(res => res.json()).then(data => console.log(data))}
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          nothing to see here
-        </a>
-      </header>
+      <p>{location}</p>
     </div>
   );
 }
