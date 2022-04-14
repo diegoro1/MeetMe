@@ -12,8 +12,7 @@ const getLocations = () => {
   return new Promise(function(resolve, reject) {
     pool.query('SELECT * FROM location', (error, results) => {
       if (error) {
-        console.log("Error when creating a new location...")
-        console.log(error)
+        console.log(error);
         reject(error)
       }
       resolve(results.rows);
