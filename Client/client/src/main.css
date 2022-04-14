@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+:root {
+    --white-color: #FFFFFF;
+    --green-color: #A6CFD5;
+    --blue-color: #7F96FF;
+    --pink-color: #E56399;
+    --dark-pink: #320E3B;
+}
+
+.shadow { 
+	box-shadow: 10px 10px 4px var(--dark-pink); 
+	-webkit-box-shadow: 10px 10px 4px var(--dark-pink); 
+	-moz-box-shadow: 10px 10px 4px var(--dark-pink); 
+}

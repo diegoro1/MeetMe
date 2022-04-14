@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
-import './App.css';
+import LoginPage from './Components/LoginPage/LoginPage';
+import './main.css';
 
 function App() {
   const [location, setLocation] = useState([]);
@@ -17,7 +18,7 @@ function App() {
 
   return (
     <div className="App">
-      <p>{location}</p>
+      <LoginPage />
     </div>
   );
 }

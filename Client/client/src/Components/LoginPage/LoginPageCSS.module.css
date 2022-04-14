@@ -1,0 +1,34 @@
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: var(--white-color);
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10rem;
+    width: 100%;
+}
+
+p {
+    font-size: 20px;
+    text-align: center;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    height: 5rem;
+}
+
+.textContent {
+    margin-right: 10rem;
+}
+
+::placeholder {
+    color: #505050;
+}
