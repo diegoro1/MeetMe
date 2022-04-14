@@ -114,5 +114,3 @@ CREATE TABLE IF NOT EXISTS user_going_to (
     FOREIGN KEY(user_uuid) REFERENCES users(user_uuid),
     FOREIGN KEY(events_uuid) REFERENCES events(events_uuid)
 );
-create_db.sql
-4 KB

@@ -4,8 +4,8 @@ const Pool = require('pg').Pool
 const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.HOST,
-  database: process.env.DBNAME,
-  password: process.env.PASSWORD,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
   port: process.env.PORT,
 });
 
@@ -23,6 +23,22 @@ const getLocations = () => {
   })
 }
 
+const createLocation = (body) => {
+  return new Promise(function(resolve, reject) {
+    const { name, address, longitude, latitude } = body
+    let query = 'INSERT INTO location (location_uuid, name, address, longitude, latitude) VALUES (uuid_generate_v4(), $1, $2, $3, $4) RETURNING *';
+    pool.query(query, [name, address, longitude, latitude], (error, results) => {
+      if (error) {
+        reject(error)
+      }
+      resolve(results.rows[0])
+    })
+  })
+}
+
+
+
 module.exports = {
-  getLocations
+  getLocations,
+  createLocation
 }
