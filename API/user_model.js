@@ -48,7 +48,7 @@ const userExist = (body) => {
       }
       resolve(results.rows[0]);
     })
-  }
+  })
 }
 
 module.exports = {
