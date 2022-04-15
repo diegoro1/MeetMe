@@ -41,8 +41,6 @@ const userExist = (body) => {
     const {email, password} = body;
     let query = 'SELECT * FROM users WHERE email=$1 AND hash=$2'
     pool.query(query, [email, hash.decrypt(password)], (error, results) => {
-      console.log("Results...")
-      console.log(results.rows)
       if (error || results.rows.length == 0) {
         console.log("Error with user_model");
         console.log(error)
@@ -55,20 +53,33 @@ const userExist = (body) => {
 
 const userByEmail = (body) => {
   return new Promise(function(resolve, reject) {
-    const {email} = body;
-    let query = 'SELECT * FROM users WHERE email=$1'
-    pool.query(query, [email], (error, results) => {
-      console.log("Results...");
-      console.log(results.rows);
+    const {emails} = body;
+    let query = 'SELECT * FROM users WHERE email in ($1, $2, $3);'
+    pool.query(query, [emails[0], emails[1], emails[2]], (error, results) => {
       if (error || results.rows.length == 0) {
         console.log("Error with user_model");
-        console.log(error);
+        console.log(error)
         reject(error);
       }
-      resolve(results.rows[0]);
+      resolve(results.rows);
     })
   })
 }
+
+// const userByEmail = (body) => {
+//   return new Promise(function(resolve, reject) {
+//     const {emails} = body;
+//     let query = 'SELECT * FROM users WHERE email in ($1, $2);'
+//     pool.query(query, [emails[0], emails[1]], (error, results) => {
+//       if (error || results.rows.length == 0) {
+//         console.log("Error with user_model");
+//         console.log(error)
+//         reject(error);
+//       }
+//       resolve(results.rows);
+//     })
+//   })
+// }
 
 module.exports = {
   getUsers,

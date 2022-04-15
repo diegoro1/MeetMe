@@ -1,8 +1,11 @@
 import style from './LoginForm.module.css';
 import { useState, useEffect } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function LoginForm() {
+    const navigate = useNavigate();
+
     let [schools, setSchool] = useState([]);
     
     useEffect(() => {
@@ -109,8 +112,8 @@ export default function LoginForm() {
         })
         .then(res => {
           if (res.status === 200) {
-            // redirect user!!!!!!!!
             console.log("correct");
+            navigate("/rsos");
           }
           else if (res.status === 500) {
             alert("User not found... 🥺");  
@@ -129,8 +132,8 @@ export default function LoginForm() {
         })
         .then(res => {
           if (res.status === 200) {
-            // redirect user!!!!!!!!
             alert("Account Created");
+            navigate("/");
           }
           else if (res.status === 500) {
             alert("Sorry, we don't want you 🥺");  

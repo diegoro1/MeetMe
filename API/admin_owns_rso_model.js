@@ -22,6 +22,20 @@ const createAdminOwnsRSO = (body) => {
     })
 }
 
+const deleteUser = (body => {
+  return new Promise(function(resolve, reject) {
+      const { admin_uuid } = body
+      let query = 'DELETE from admin_owns_rso where admin_uid = $1 RETURNING *';
+      pool.query(query, [admin_uuid], (error, results) => {
+          if (error) {
+              reject(error)
+          }
+          resolve(results.rows[0])
+      })
+  })
+})
+
 module.exports = {
-    createAdminOwnsRSO
+    createAdminOwnsRSO,
+    deleteUser
 }

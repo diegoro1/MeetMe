@@ -22,7 +22,21 @@ const createAdmin = (body) => {
     })
 }
 
+const findAdminWithUser = (body) => {
+  return new Promise(function(resolve, reject) {
+    const { name } = body
+    let query = 'SELECT * FROM admin WHERE user_uuid=$1 RETURNING *';
+    pool.query(query, [user_uuid], (error, results) => {
+      if (error) {
+        reject(error)
+      }
+      resolve(results.rows[0])
+    })
+  })
+}
+
 module.exports = {
-    createAdmin
+    createAdmin,
+    findAdminWithUser
 }
   

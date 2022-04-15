@@ -22,6 +22,34 @@ const createRSOMember = (body) => {
     })
 }
 
+const getRSOWithUser = (body) => {
+  return new Promise(function(resolve, reject) {
+    const { name } = body
+    let query = 'SELECT * FROM rso_member WHERE user_uuid=$1 RETURNING *';
+    pool.query(query, [user_uuid], (error, results) => {
+      if (error) {
+        reject(error)
+      }
+      resolve(results.rows[0])
+    })
+  })
+}
+
+const deleteUser = (body => {
+  return new Promise(function(resolve, reject) {
+      const { user_uuid } = body
+      let query = 'DELETE from rso_member where user_uuid = $1 RETURNING *';
+      pool.query(query, [user_uuid], (error, results) => {
+          if (error) {
+              reject(error)
+          }
+          resolve(results.rows[0])
+      })
+  })
+})
+
 module.exports = {
-    createRSOMember
+    createRSOMember,
+    getRSOWithUser,
+    deleteUser
 }
