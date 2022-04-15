@@ -1,3 +1,4 @@
 API/.env
 .env
 API/node_modules
+hash.js
