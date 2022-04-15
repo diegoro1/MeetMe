@@ -12,6 +12,8 @@ const pool = new Pool({
 const createRSOMember = (body) => {
     return new Promise(function(resolve, reject) {
       const { user_uuid, rso_uuid } = body
+      console.log("In model")
+      console.log(user_uuid, rso_uuid)
       let query = 'INSERT INTO rso_member (rso_member, user_uuid, rso_uuid) VALUES (uuid_generate_v4(), $1, $2) RETURNING *';
       pool.query(query, [user_uuid, rso_uuid], (error, results) => {
         if (error) {

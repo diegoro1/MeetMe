@@ -53,9 +53,9 @@ const userExist = (body) => {
 
 const userByEmail = (body) => {
   return new Promise(function(resolve, reject) {
-    const {emails} = body;
-    let query = 'SELECT * FROM users WHERE email in ($1, $2);'
-    pool.query(query, [emails[0]], (error, results) => {
+    const {email} = body;
+    let query = 'SELECT * FROM users WHERE email=$1;'
+    pool.query(query, [email], (error, results) => {
       if (error || results.rows.length == 0) {
         console.log("Error with user_model");
         console.log(error)

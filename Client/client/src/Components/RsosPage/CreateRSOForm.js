@@ -15,7 +15,26 @@ export default function CreateRSOForm(props) {
 
 
     function submitRSO() {
+        let name = rso; 
+        console.log(email, name);
 
+        let newRSO = {email, name};
+
+        fetch('http://localhost:3001/API/createRSO', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newRSO),
+        })
+        .then(res => {
+          if (res.status === 200) {
+            alert("RSO Crreated!");
+          }
+          else if (res.status === 500) {
+            alert("RSO is too mid... 🥺");  
+          }  
+        })
     }
 
     return (

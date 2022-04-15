@@ -1,6 +1,7 @@
 import NavBar from '../Shared/NavBar';
 import SidePanel from './SidePanel';
 import CreateRSOForm from './CreateRSOForm';
+import DashBoard from './DashBoard';
 import { useState, useEffect } from 'react';
 import style from './RsosPage.module.css';
 
@@ -12,7 +13,7 @@ export default function RsosPage() {
         <NavBar />
         <div className={style.midContainer}>
             <SidePanel setCreateRso={setCreateRso} />
-            { createNewRso ? (<CreateRSOForm setCreateRso={setCreateRso}/>):(<p>YO!</p>) }
+            { createNewRso ? (<CreateRSOForm setCreateRso={setCreateRso}/>):(<DashBoard />) }
         </div>
     </>
   )

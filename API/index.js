@@ -94,31 +94,38 @@ app.get('/API/getUserByEmail', (req, res) => {
 
 app.post('/API/createRSO', (req, res) => {
   // Get the users
-  user_model.userByEmail({emails:req.body.emails})
-  .then(response => {
-    console.log(response1)
+  user_model.userByEmail({email:req.body.email})
+  .then(response1 => {
+    let user_uuid = response1[0]["user_uuid"]
     // Create an RSO
     rso_model.createRSO({name:req.body.name})
     .then(response2 => {
-      rso_member_model.createRSOMember({user_uuid:response1["user_uuid"], rso_uuid:response2["rso_uuid"]})
-      .then(resposne => {
+      console.log({user_uuid:user_uuid, rso_uuid:response2["rso_uuid"]})
+      rso_member_model.createRSOMember({user_uuid:user_uuid, rso_uuid:response2["rso_uuid"]})
+      .then(response => {
         res.status(200).send(response);
       })
       .catch(error => {
+        console.log(1)
+        console.log(error)
         res.status(500).send(error);
       })
     })
     .catch(error => {
+      console.log(2)
       res.status(500).send(error);
     })
   })
   .catch(error => {
+    console.log(3)
+    console.log(error)
     res.status(500).send(error);
   })
 })
 
 app.post('/API/joinRSO', (req, res) => {
-  rso_member_model.createRSOMember({user_uuid:req.body.user_uuid, rso_uuid:req.body.rso_uuid})
+
+  rso_member_model.createRSOMember({user_uuid:user_uuid, rso_uuid:rso_uuid})
   .then(response => {
     console.log(response);
     res.status(200).send(response);
@@ -161,6 +168,16 @@ app.post('/API/leaveRSO', (req, res) => {
 
 app.get('/API/getRSOWithUser', (req, res) => {
   rso_member_model.getRSOWithUser(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+})
+
+app.get('/API/getAllRSOs', (req, res) => {
+  rso_model.getAllRSO()
   .then(response => {
     res.status(200).send(response);
   })
