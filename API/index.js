@@ -69,8 +69,36 @@ app.post('/API/createRSO', (req, res) => {
   .then(response => {
     for (let user in req.body.users) {
       // make the users members in rso_member
+      user_uuid = user["user_uuid"]
+      rso_uuid = response["rso_uuid"]
+      rso_member_model.createRSOMember({user_uuid:user_uuid, rso_uuid:rso_uuid})
+      .then(response => {
+        console.log(response);
+        res.status(200).send(response);
+      })
+      .catch(error => {
+        console.log(error);
+        res.status(500).send(response);
+      });
       // make the users admins
-      // make the admins go into admin_owns_rso
+      university_uuid = user["university_uuid"]
+      admin_model.createAdmin({user_uuid:user_uuid, university_uuid:university_uuid})
+      .then(response => {
+        // make the admins go into admin_owns_rso
+        admin_owns_rso_model.createAdminOwnsRSO({admin_uuid:response["admin_uuid"], rso_uuid:rso_uuid})
+        .then(response => {
+          console.log(response);
+          res.status(200).send(response);
+        })
+        .catch(error => {
+          console.log(error);
+          res.status(500).send(response);
+        })
+      })
+      .catch(error => {
+        console.log(error);
+        res.status(500).send(response);
+      })
     }
   })
   .catch(error => {

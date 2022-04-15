@@ -108,6 +108,25 @@ export default function LoginForm() {
         })
     }
 
+    function createNewAccount() {
+        fetch('http://localhost:3001/API/createUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newUser),
+        })
+        .then(res => {
+          if (res.status === 200) {
+            // redirect user!!!!!!!!
+            console.log("correct");
+          }
+          else if (res.status === 500) {
+            alert("Sorry, we don't want you 🥺");  
+          }  
+        })
+    }
+
     return (
         <div className={style.form + " shadow"}>
             {!createAccount ? (
@@ -122,7 +141,7 @@ export default function LoginForm() {
                     </label>
                     <button className={style.loginButton + " " + style.inputText} value="Login" 
                     onClick={submitUser}>Login</button>
-                    <button className={style.createButton + " " + style.inputText} >Create Account</button>
+                    <button className={style.createButton + " " + style.inputText} onClick={() => setCreateAccount(true)}>Create Account</button>
                 </>
             ) : (
                 <>
@@ -158,6 +177,9 @@ export default function LoginForm() {
                             return <option name="name">{name}</option>
                         })}
                 </select>
+                <button className={style.loginButton + " " + style.inputText} value="Login" 
+                    onClick={createNewAccount}>Login</button>
+                <button className={style.createButton + " " + style.inputText} onClick={() => setCreateAccount(false)}>Cancel</button>
                 </>
             )}
         </div>
