@@ -1,6 +1,6 @@
 import style from './SidePanel.module.css';
 
-export default function SidePanel() {
+export default function SidePanel(props) {
   return (
     <div className={style.container}>
         <h1>RSOS</h1>
@@ -12,7 +12,7 @@ export default function SidePanel() {
             <li className={style.rsoLi}>Universities</li>
         </ul>
         <div className={style.buttonContainer}>
-            <button>Create RSO</button>
+            <button onClick={() => props.setCreateRso(true)}>Create RSO</button>
         </div>
     </div>
   )

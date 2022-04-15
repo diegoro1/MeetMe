@@ -1,0 +1,4 @@
+.midContainer {
+    display: flex;
+    background-color: var(--gray-color);
+}

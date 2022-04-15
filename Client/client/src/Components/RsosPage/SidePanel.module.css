@@ -13,8 +13,9 @@ h1 {
     box-shadow: 2px 0 5px -2px black; 
 	-webkit-box-shadow: 2px 0 5px -2px black; 
 	-moz-box-shadow: 2px 0 5px -2px black;
-    width: 20%; 
+    max-width: 20%; 
     height: 91vh;
+    background-color: var(--white-color);
 }
 
 .buttonContainer {

@@ -10,7 +10,6 @@ const pool = new Pool({
 });
 
 const getAllRSO = () => {
-  console.log(process.env.DB_USER);
   return new Promise(function(resolve, reject) {
     pool.query('SELECT * FROM RSO', (error, results) => {
       console.log(results);
