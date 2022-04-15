@@ -22,7 +22,13 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', (req, res) => {
-  // nothing
+  user_model.getUsers()
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
 })
 
 app.get('/API/getUniversities', (req, res) => {
@@ -38,14 +44,17 @@ app.get('/API/getUniversities', (req, res) => {
 app.post('/API/login', (req, res) => {
   user_model.userExist(req.body)
   .then(response => {
+    console.log(response)
     res.status(200).send(response);
   })
   .catch(error => {
+    console.log(error)
     res.status(500).send(error);
   })
 })
 
 app.post('/API/createUser', (req, res) => {
+  console.log(req.body);
   encryptPassword = hash.encrypt(req.body.password)
   university_model.getUniversityWithName({name:req.body.name}).then(response => {
     user_model.createUser({first_name:req.body.first_name, last_name:req.body.last_name, gender:req.body.gender, date_of_birth:req.body.date_of_birth, hash:encryptPassword, email:req.body.email, university:response["university_uuid"]})
@@ -60,6 +69,16 @@ app.post('/API/createUser', (req, res) => {
   })
   .catch(error => {
     res.status(500).send(response);
+  })
+})
+
+app.get('/API/getUserByEmail', (req, res) => {
+  user_model.userByEmail(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
   })
 })
 
