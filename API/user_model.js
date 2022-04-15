@@ -40,8 +40,11 @@ const userExist = (body) => {
   return new Promise(function(resolve, reject) {
     const {email, password} = body;
     let query = 'SELECT * FROM users WHERE email=$1 AND hash=$2'
+    console.log(email, password);
     pool.query(query, [email, password], (error, results) => {
-      if (error) {
+      console.log("Results...")
+      console.log(results.rows)
+      if (error || results.rows.length == 0) {
         console.log("Error with user_model");
         console.log(error)
         reject(error);
