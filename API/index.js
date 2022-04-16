@@ -22,17 +22,37 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', (req, res) => {
-  // user_model.getUsers()
-  // .then(response => {
-  //   res.status(200).send(response);
-  // })
-  // .catch(error => {
-  //   res.status(500).send(error);
-  // })
+  university_model.getUniversities()
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
 })
 
 app.get('/API/getUniversities', (req, res) => {
   university_model.getUniversities()
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+})
+
+app.get('/API/getUsers', (req, res) => {
+  user_model.getUsers()
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+})
+
+app.get('/API/getAllRSOs', (req, res) => {
+  rso_model.getAllRSO()
   .then(response => {
     res.status(200).send(response);
   })
@@ -176,15 +196,7 @@ app.get('/API/getRSOWithUser', (req, res) => {
   })
 })
 
-app.get('/API/getAllRSOs', (req, res) => {
-  rso_model.getAllRSO()
-  .then(response => {
-    res.status(200).send(response);
-  })
-  .catch(error => {
-    res.status(500).send(error);
-  })
-})
+
 
 app.get('/API/getMembers', (req, res) => {
   rso_member_model.getMembers(req.body)
