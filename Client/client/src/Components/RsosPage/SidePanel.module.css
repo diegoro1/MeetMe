@@ -1,0 +1,43 @@
+h1 {
+    padding: 1.5rem 2rem;
+}
+
+.rsoLi {
+    margin: 0 0 1rem 4rem;
+    list-style: none;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.container {
+    box-shadow: 2px 0 5px -2px black; 
+	-webkit-box-shadow: 2px 0 5px -2px black; 
+	-moz-box-shadow: 2px 0 5px -2px black;
+    max-width: 20%; 
+    height: 91vh;
+    background-color: var(--white-color);
+}
+
+.buttonContainer {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+button {
+    color: black !important;
+    font-size: large;
+    margin-top: 1rem;
+    width: 75%;
+    align-self: center;
+    font-weight: 600;
+    color: white;
+    background-color: var(--green-color);
+    border: none;
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+button:focus,
+button:hover {
+    cursor: pointer;
+}

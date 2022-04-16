@@ -10,10 +10,15 @@
     --blue-color: #7F96FF;
     --pink-color: #E56399;
     --dark-pink: #320E3B;
+    --gray-color: #E9EBEE;
 }
 
 .shadow { 
 	box-shadow: 10px 10px 4px var(--dark-pink); 
 	-webkit-box-shadow: 10px 10px 4px var(--dark-pink); 
 	-moz-box-shadow: 10px 10px 4px var(--dark-pink); 
+}
+
+html, body {
+    overflow-x: hidden;
 }

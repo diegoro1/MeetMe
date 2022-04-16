@@ -1,0 +1,35 @@
+.card {
+    margin-top: 2rem;
+    background-color: white;
+    border-radius: 20px;
+    min-width: 350px;
+    margin-right: 2.5rem;
+}
+
+.topCard {
+    border-radius: 20px 20px 0 0;
+    background-image: url('../../Assets/ucf-2022.jpeg');
+    background-size: 350px;
+    width: 100%;
+    height: 10rem;
+}
+
+.bottomCard {
+    padding: 1rem 1.5rem;
+    background-color: white;
+    border-radius: 0 0 20px 20px;
+}
+
+.title {
+    padding-bottom: 1rem;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+}

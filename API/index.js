@@ -3,7 +3,7 @@ const app = express();
 const port = 3001;
 
 const admin_model = require('./admin_model');
-const admin_owns_rso = require('./admin_owns_rso_model')
+const admin_owns_rso_model = require('./admin_owns_rso_model')
 const comment_model = require('./comment_model');
 const location_model = require('./location_model');
 const rso_member_model = require('./rso_member_model');
@@ -22,13 +22,13 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', (req, res) => {
-  user_model.getUsers()
-  .then(response => {
-    res.status(200).send(response);
-  })
-  .catch(error => {
-    res.status(500).send(error);
-  })
+  // user_model.getUsers()
+  // .then(response => {
+  //   res.status(200).send(response);
+  // })
+  // .catch(error => {
+  //   res.status(500).send(error);
+  // })
 })
 
 app.get('/API/getUniversities', (req, res) => {
@@ -82,52 +82,118 @@ app.get('/API/getUserByEmail', (req, res) => {
   })
 })
 
-app.post('/API/createRSO', (req, res) => {
-  // create the rso
-  rso_model.createRSO({name:req.body.name})
+app.get('/API/getUserByEmail', (req, res) => {
+  rso_model.getAllRSO(req.body)
   .then(response => {
-    for (let user in req.body.users) {
-      // make the users members in rso_member
-      user_uuid = user["user_uuid"]
-      rso_uuid = response["rso_uuid"]
-      rso_member_model.createRSOMember({user_uuid:user_uuid, rso_uuid:rso_uuid})
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+})
+
+app.post('/API/createRSO', (req, res) => {
+  // Get the users
+  user_model.userByEmail({email:req.body.email})
+  .then(response1 => {
+    let user_uuid = response1[0]["user_uuid"]
+    // Create an RSO
+    rso_model.createRSO({name:req.body.name})
+    .then(response2 => {
+      console.log({user_uuid:user_uuid, rso_uuid:response2["rso_uuid"]})
+      rso_member_model.createRSOMember({user_uuid:user_uuid, rso_uuid:response2["rso_uuid"]})
       .then(response => {
-        console.log(response);
         res.status(200).send(response);
       })
       .catch(error => {
-        console.log(error);
-        res.status(500).send(response);
-      });
-      // make the users admins
-      university_uuid = user["university_uuid"]
-      admin_model.createAdmin({user_uuid:user_uuid, university_uuid:university_uuid})
-      .then(response => {
-        // make the admins go into admin_owns_rso
-        admin_owns_rso_model.createAdminOwnsRSO({admin_uuid:response["admin_uuid"], rso_uuid:rso_uuid})
-        .then(response => {
-          console.log(response);
-          res.status(200).send(response);
-        })
-        .catch(error => {
-          console.log(error);
-          res.status(500).send(response);
-        })
+        console.log(1)
+        console.log(error)
+        res.status(500).send(error);
       })
-      .catch(error => {
-        console.log(error);
-        res.status(500).send(response);
-      })
-    }
+    })
+    .catch(error => {
+      console.log(2)
+      res.status(500).send(error);
+    })
   })
   .catch(error => {
-    res.status(500).send(response);
+    console.log(3)
+    console.log(error)
+    res.status(500).send(error);
   })
+})
+
+app.post('/API/joinRSO', (req, res) => {
+
+  rso_member_model.createRSOMember({user_uuid:user_uuid, rso_uuid:rso_uuid})
+  .then(response => {
+    console.log(response);
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    console.log(error);
+    res.status(500).send(response);
+  });
 })
 
 app.post('/API/leaveRSO', (req, res) => {
   // if the user is in rso_member remove them
-  // if user is an admin delete from admin and admin_owns_rso
+  rso_member_model.deleteUser({user_uuid:req.body.user_uuid})
+  .then(response => {
+    console.log(response);
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    console.log(error);
+    res.status(500).send(response);
+  });
+  // // if user is an admin delete from admin and admin_owns_rso
+  // admin_model.findAdminWithUser({user_uuid:req.body.user_uuid})
+  // .then(response => {
+  //   admin_owns_rso_model.deleteUser
+  //   .then(response => {
+  //     console.log(response);
+  //     res.status(200).send(response);
+  //   })
+  //   .catch(error => {
+  //     console.log(error);
+  //     res.status(500).send(response);
+  //   });
+  // })
+  // .catch(error => {
+  //   console.log(error);
+  //   res.status(500).send(response);
+  // });
+})
+
+app.get('/API/getRSOWithUser', (req, res) => {
+  rso_member_model.getRSOWithUser(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+})
+
+app.get('/API/getAllRSOs', (req, res) => {
+  rso_model.getAllRSO()
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+})
+
+app.get('/API/getMembers', (req, res) => {
+  rso_member_model.getMembers(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
 })
 
 app.post('/API/createEvent', (req, res) => {
@@ -179,4 +245,20 @@ app.post('/API/updateComment', (req, res) => {
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
+})
+
+app.get('/API/deleteEverything', (req, res) => {
+  rso_member_model.deleteEverything(req.body)
+  .then(response => {
+    rso_model.deleteEverything(req.body)
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch(error => {
+      res.status(500).send(error);
+    })
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
 })
