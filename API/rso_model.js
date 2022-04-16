@@ -35,7 +35,21 @@ const createRSO = (body) => {
   })
 }
 
+const deleteEverything = (body => {
+  return new Promise(function(resolve, reject) {
+      let query = 'DELETE from RSO ';
+      pool.query(query, (error, results) => {
+          if (error) {
+            console.log(error)
+              reject(error)
+          }
+          resolve(results)
+      })
+  })
+})
+
 module.exports = {
   getAllRSO,
-  createRSO
+  createRSO,
+  deleteEverything
 }

@@ -186,6 +186,15 @@ app.get('/API/getAllRSOs', (req, res) => {
   })
 })
 
+app.get('/API/getMembers', (req, res) => {
+  rso_member_model.getMembers(req.body)
+  .then(response => {
+    res.status(200).send(response);
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
+})
 
 app.post('/API/createEvent', (req, res) => {
   // public events
@@ -236,4 +245,20 @@ app.post('/API/updateComment', (req, res) => {
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
+})
+
+app.get('/API/deleteEverything', (req, res) => {
+  rso_member_model.deleteEverything(req.body)
+  .then(response => {
+    rso_model.deleteEverything(req.body)
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch(error => {
+      res.status(500).send(error);
+    })
+  })
+  .catch(error => {
+    res.status(500).send(error);
+  })
 })

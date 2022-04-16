@@ -5,3 +5,10 @@
 h1 {
     margin-left: -2rem;
 }
+
+.cardHolder {
+    display: flex;
+    overflow: auto;
+    white-space: nowrap;
+    overflow-y: hidden;
+}

@@ -48,6 +48,7 @@ export default function CreateRSOForm(props) {
                     <input className={style.inputText} name="rso-name" type="text" placeholder="RSO Name"
                     onChange={e => changeRSO(e.target.value)}/>
                 </label>
+                <textarea className={style.inputText} name="" id="" cols="15" rows="5" placeholder='Add student emails separated by commas'></textarea>
                 <button className={style.loginButton + " " + style.inputText} value="Login" 
                 onClick={submitRSO}>Create RSO</button>
                 <button className={style.createButton + " " + style.inputText} onClick={()=> props.setCreateRso(false)}>Cancel</button>

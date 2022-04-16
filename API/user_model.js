@@ -23,7 +23,6 @@ const getUsers = () => {
 const createUser = (body) => {
   return new Promise(function(resolve, reject) {
     const { first_name, last_name, gender, date_of_birth, hash, email, university } = body;
-    console.log("Gender " + gender);
     let query = 'INSERT INTO users( user_uuid, firts_name, last_name, gender, date_of_birth, hash, email, university_uuid) VALUES (uuid_generate_v4(), $1, $2, $3, $4, $5, $6, $7) RETURNING *';
     pool.query(query, [first_name, last_name, gender, date_of_birth, hash, email, university], (error, results) => {
       if (error) {
